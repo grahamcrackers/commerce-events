@@ -1,5 +1,5 @@
 {
-    "name": "@grahamcrackers/commerce-events-sdk",
+    "name": "@grahamcrackers/commerce-events-collector",
     "version": "1.1.8",
     "description": "Event collector for Adobe Commerce storefronts",
     "main": "./dist/index.js",
