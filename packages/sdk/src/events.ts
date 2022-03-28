@@ -1,210 +1,35 @@
-import {
-    Event,
-    EventHandler,
-} from "@adobe/magento-storefront-events-sdk/dist/types/types/events";
+const events = {
+    ADD_TO_CART: "add-to-cart",
+    ABANDON_CART: "abandon-cart",
+    CREATE_ACCOUNT: "create-account",
+    CUSTOM_URL: "custom-url",
+    DATA_LAYER_CHANGE: "adobeDataLayer:change",
+    DATA_LAYER_EVENT: "adobeDataLayer:event",
+    EDIT_ACCOUNT: "edit-account",
+    INITIATE_CHECKOUT: "initiate-checkout",
+    INSTANT_PURCHASE: "instant-purchase",
+    PAGE_ACTIVITY_SUMMARY: "page-activity-summary",
+    PAGE_VIEW: "page-view",
+    PLACE_ORDER: "place-order",
+    PRODUCT_PAGE_VIEW: "product-page-view",
+    RECS_ITEM_CLICK: "recs-item-click",
+    RECS_ITEM_ADD_TO_CART_CLICK: "recs-item-add-to-cart-click",
+    RECS_REQUEST_SENT: "recs-api-request-sent",
+    RECS_RESPONSE_RECEIVED: "recs-api-response-received",
+    RECS_UNIT_RENDER: "recs-unit-impression-render",
+    RECS_UNIT_VIEW: "recs-unit-view",
+    REFERRER_URL: "referrer-url",
+    REMOVE_FROM_CART: "remove-from-cart",
+    SEARCH_CATEGORY_CLICK: "search-category-click",
+    SEARCH_PRODUCT_CLICK: "search-product-click",
+    SEARCH_REQUEST_SENT: "search-request-sent",
+    SEARCH_RESPONSE_RECEIVED: "search-response-received",
+    SEARCH_RESULTS_VIEW: "search-results-view",
+    SEARCH_SUGGESTION_CLICK: "search-suggestion-click",
+    SHOPPING_CART_VIEW: "shopping-cart-view",
+    SIGN_IN: "sign-in",
+    SIGN_OUT: "sign-out",
+    UPDATE_CART: "update-cart",
+} as const;
 
-import { createEventForwardingCtx } from "./contexts";
-import {
-    abandonCartHandler,
-    abandonCartHandlerAEP,
-    addToCartHandler,
-    addToCartHandlerAEP,
-    createAccountHandlerAEP,
-    editAccountHandlerAEP,
-    initiateCheckoutHandler,
-    initiateCheckoutHandlerAEP,
-    instantPurchaseHandler,
-    instantPurchaseHandlerAEP,
-    pageViewHandler,
-    pageViewHandlerAEP,
-    placeOrderHandler,
-    placeOrderHandlerAEP,
-    productViewHandler,
-    productViewHandlerAEP,
-    recsItemAddToCartClickHandler,
-    recsItemClickHandler,
-    recsRequestSentHandler,
-    recsResponseReceivedHandler,
-    recsUnitRenderHandler,
-    recsUnitViewHandler,
-    searchCategoryClickHandler,
-    searchProductClickHandler,
-    searchRequestSentHandler,
-    searchRequestSentHandlerAEP,
-    searchResponseReceivedHandler,
-    searchResponseReceivedHandlerAEP,
-    searchResultsViewHandler,
-    searchSuggestionClickHandler,
-    shoppingCartViewHandler,
-    shoppingCartViewHandlerAEP,
-    signInHandlerAEP,
-    signOutHandlerAEP,
-} from "./handlers";
-import { EventForwardingContext } from "./types/contexts";
-
-const isCommerce = (event: Event): boolean => {
-    const ctx: EventForwardingContext = createEventForwardingCtx(
-        event.eventInfo.eventForwardingContext,
-    );
-    // default to true unless explicitly set to false
-    return ctx.commerce === false ? false : true;
-};
-
-const isAep = (event: Event): boolean => {
-    const ctx: EventForwardingContext = createEventForwardingCtx(
-        event.eventInfo.eventForwardingContext,
-    );
-    return ctx.aep ?? false;
-};
-
-const handleIf = (
-    predicate: (e: Event) => boolean,
-    handler: EventHandler,
-): EventHandler => {
-    return (event: Event) => {
-        if (predicate(event)) {
-            handler(event);
-        }
-    };
-};
-
-// page
-const handleSnowplowPageView = handleIf(isCommerce, pageViewHandler);
-const handleAepPageView = handleIf(isAep, pageViewHandlerAEP);
-
-// cart
-const handleSnowplowInitiateCheckout = handleIf(
-    isCommerce,
-    initiateCheckoutHandler,
-);
-const handleAepInitiateCheckout = handleIf(isAep, initiateCheckoutHandlerAEP);
-
-const handleSnowplowAbandonCart = handleIf(isCommerce, abandonCartHandler);
-const handleAepAbandonCart = handleIf(isAep, abandonCartHandlerAEP);
-
-// product
-const handleSnowplowAddToCart = handleIf(isCommerce, addToCartHandler);
-const handleAepAddToCart = handleIf(isAep, addToCartHandlerAEP);
-
-// shopping cart view
-const handleSnowplowShoppingCartView = handleIf(
-    isCommerce,
-    shoppingCartViewHandler,
-);
-const handleAepShoppingCartView = handleIf(isAep, shoppingCartViewHandlerAEP);
-
-const handleSnowplowProductView = handleIf(isCommerce, productViewHandler);
-const handleAepProductView = handleIf(isAep, productViewHandlerAEP);
-
-// order
-const handleSnowplowPlaceOrder = handleIf(isCommerce, placeOrderHandler);
-const handleAepPlaceOrder = handleIf(isAep, placeOrderHandlerAEP);
-const handleSnowplowInstantPurchase = handleIf(
-    isCommerce,
-    instantPurchaseHandler,
-);
-const handleAepInstantPurchase = handleIf(isAep, instantPurchaseHandlerAEP);
-
-// account
-const handleAepSignIn = handleIf(isAep, signInHandlerAEP);
-const handleAepSignOut = handleIf(isAep, signOutHandlerAEP);
-const handleAepCreateAccount = handleIf(isAep, createAccountHandlerAEP);
-const handleAepEditAccount = handleIf(isAep, editAccountHandlerAEP);
-
-// search
-const handleSnowplowSearchRequestSent = handleIf(
-    isCommerce,
-    searchRequestSentHandler,
-);
-const handleAepSearchRequestSent = handleIf(isAep, searchRequestSentHandlerAEP);
-const handleSnowplowSearchResponseReceived = handleIf(
-    isCommerce,
-    searchResponseReceivedHandler,
-);
-const handleAepSearchResponseReceived = handleIf(
-    isAep,
-    searchResponseReceivedHandlerAEP,
-);
-
-const subscribeToEvents = (): void => {
-    const mse = window.magentoStorefrontEvents;
-
-    mse.subscribe.abandonCart(handleSnowplowAbandonCart);
-    mse.subscribe.abandonCart(handleAepAbandonCart);
-    mse.subscribe.addToCart(handleSnowplowAddToCart);
-    mse.subscribe.addToCart(handleAepAddToCart);
-    mse.subscribe.createAccount(handleAepCreateAccount);
-    mse.subscribe.editAccount(handleAepEditAccount);
-    mse.subscribe.initiateCheckout(handleSnowplowInitiateCheckout);
-    mse.subscribe.initiateCheckout(handleAepInitiateCheckout);
-    mse.subscribe.instantPurchase(handleSnowplowInstantPurchase);
-    mse.subscribe.instantPurchase(handleAepInstantPurchase);
-    mse.subscribe.pageView(handleSnowplowPageView);
-    mse.subscribe.pageView(handleAepPageView);
-    mse.subscribe.placeOrder(handleSnowplowPlaceOrder);
-    mse.subscribe.placeOrder(handleAepPlaceOrder);
-    mse.subscribe.productPageView(handleSnowplowProductView);
-    mse.subscribe.productPageView(handleAepProductView);
-    mse.subscribe.recsItemAddToCartClick(recsItemAddToCartClickHandler);
-    mse.subscribe.recsItemClick(recsItemClickHandler);
-    mse.subscribe.recsRequestSent(recsRequestSentHandler);
-    mse.subscribe.recsResponseReceived(recsResponseReceivedHandler);
-    mse.subscribe.recsUnitRender(recsUnitRenderHandler);
-    mse.subscribe.recsUnitView(recsUnitViewHandler);
-    mse.subscribe.searchCategoryClick(searchCategoryClickHandler);
-    mse.subscribe.searchProductClick(searchProductClickHandler);
-    mse.subscribe.searchRequestSent(handleSnowplowSearchRequestSent);
-    mse.subscribe.searchRequestSent(handleAepSearchRequestSent);
-    mse.subscribe.searchResponseReceived(handleSnowplowSearchResponseReceived);
-    mse.subscribe.searchResponseReceived(handleAepSearchResponseReceived);
-    mse.subscribe.searchResultsView(searchResultsViewHandler);
-    mse.subscribe.searchSuggestionClick(searchSuggestionClickHandler);
-    mse.subscribe.shoppingCartView(handleSnowplowShoppingCartView);
-    mse.subscribe.shoppingCartView(handleAepShoppingCartView);
-    mse.subscribe.signIn(handleAepSignIn);
-    mse.subscribe.signOut(handleAepSignOut);
-};
-
-const unsubscribeFromEvents = (): void => {
-    const mse = window.magentoStorefrontEvents;
-
-    mse.unsubscribe.abandonCart(handleSnowplowAbandonCart);
-    mse.unsubscribe.abandonCart(handleAepAbandonCart);
-    mse.unsubscribe.addToCart(handleSnowplowAddToCart);
-    mse.unsubscribe.addToCart(handleAepAddToCart);
-    mse.unsubscribe.createAccount(handleAepCreateAccount);
-    mse.unsubscribe.editAccount(handleAepEditAccount);
-    mse.unsubscribe.initiateCheckout(handleSnowplowInitiateCheckout);
-    mse.unsubscribe.initiateCheckout(handleAepInitiateCheckout);
-    mse.unsubscribe.instantPurchase(instantPurchaseHandler);
-    mse.unsubscribe.instantPurchase(handleAepInstantPurchase);
-    mse.unsubscribe.pageView(handleSnowplowPageView);
-    mse.unsubscribe.pageView(handleAepPageView);
-    mse.unsubscribe.placeOrder(handleSnowplowPlaceOrder);
-    mse.unsubscribe.placeOrder(handleAepPlaceOrder);
-    mse.unsubscribe.productPageView(handleSnowplowProductView);
-    mse.unsubscribe.productPageView(handleAepProductView);
-    mse.unsubscribe.recsItemAddToCartClick(recsItemAddToCartClickHandler);
-    mse.unsubscribe.recsItemClick(recsItemClickHandler);
-    mse.unsubscribe.recsRequestSent(recsRequestSentHandler);
-    mse.unsubscribe.recsResponseReceived(recsResponseReceivedHandler);
-    mse.unsubscribe.recsUnitRender(recsUnitRenderHandler);
-    mse.unsubscribe.recsUnitView(recsUnitViewHandler);
-    mse.unsubscribe.searchCategoryClick(searchCategoryClickHandler);
-    mse.unsubscribe.searchProductClick(searchProductClickHandler);
-    mse.unsubscribe.searchRequestSent(handleSnowplowSearchRequestSent);
-    mse.unsubscribe.searchRequestSent(handleAepSearchRequestSent);
-    mse.unsubscribe.searchResponseReceived(
-        handleSnowplowSearchResponseReceived,
-    );
-    mse.unsubscribe.searchResponseReceived(handleAepSearchResponseReceived);
-    mse.unsubscribe.searchResultsView(searchResultsViewHandler);
-    mse.unsubscribe.searchSuggestionClick(searchSuggestionClickHandler);
-    mse.unsubscribe.shoppingCartView(shoppingCartViewHandler);
-    mse.unsubscribe.shoppingCartView(handleSnowplowShoppingCartView);
-    mse.unsubscribe.shoppingCartView(handleAepShoppingCartView);
-    mse.unsubscribe.signIn(handleAepSignIn);
-    mse.unsubscribe.signOut(handleAepSignOut);
-};
-
-export { subscribeToEvents, unsubscribeFromEvents };
+export default events;

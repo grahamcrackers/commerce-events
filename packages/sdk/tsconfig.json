@@ -8,9 +8,7 @@
         "strict": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "outDir": "dist",
-        "resolveJsonModule": true,
-        "lib": ["DOM", "ESNext"]
+        "outDir": "dist"
     },
     "include": ["src"]
 }
