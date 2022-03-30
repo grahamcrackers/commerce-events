@@ -12,6 +12,7 @@
     },
     "packageManager": "yarn@1.22.17",
     "scripts": {
+        "start": "turbo run start --parallel --continue",
         "build": "turbo run build",
         "dev": "turbo run dev --parallel",
         "lint": "turbo run lint",
