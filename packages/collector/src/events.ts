@@ -1,9 +1,6 @@
-import {
-    Event,
-    EventHandler,
-} from "@adobe/magento-storefront-events-sdk/dist/types/types/events";
+import { Event, EventHandler } from '@adobe/magento-storefront-events-sdk/dist/types/types/events';
 
-import { createEventForwardingCtx } from "./contexts";
+import { createEventForwardingCtx } from './contexts';
 import {
     abandonCartHandler,
     abandonCartHandlerAEP,
@@ -39,28 +36,21 @@ import {
     shoppingCartViewHandlerAEP,
     signInHandlerAEP,
     signOutHandlerAEP,
-} from "./handlers";
-import { EventForwardingContext } from "./types/contexts";
+} from './handlers';
+import { EventForwardingContext } from './types/contexts';
 
 const isCommerce = (event: Event): boolean => {
-    const ctx: EventForwardingContext = createEventForwardingCtx(
-        event.eventInfo.eventForwardingContext,
-    );
+    const ctx: EventForwardingContext = createEventForwardingCtx(event.eventInfo.eventForwardingContext);
     // default to true unless explicitly set to false
     return ctx.commerce === false ? false : true;
 };
 
 const isAep = (event: Event): boolean => {
-    const ctx: EventForwardingContext = createEventForwardingCtx(
-        event.eventInfo.eventForwardingContext,
-    );
+    const ctx: EventForwardingContext = createEventForwardingCtx(event.eventInfo.eventForwardingContext);
     return ctx.aep ?? false;
 };
 
-const handleIf = (
-    predicate: (e: Event) => boolean,
-    handler: EventHandler,
-): EventHandler => {
+const handleIf = (predicate: (e: Event) => boolean, handler: EventHandler): EventHandler => {
     return (event: Event) => {
         if (predicate(event)) {
             handler(event);
@@ -73,10 +63,7 @@ const handleSnowplowPageView = handleIf(isCommerce, pageViewHandler);
 const handleAepPageView = handleIf(isAep, pageViewHandlerAEP);
 
 // cart
-const handleSnowplowInitiateCheckout = handleIf(
-    isCommerce,
-    initiateCheckoutHandler,
-);
+const handleSnowplowInitiateCheckout = handleIf(isCommerce, initiateCheckoutHandler);
 const handleAepInitiateCheckout = handleIf(isAep, initiateCheckoutHandlerAEP);
 
 const handleSnowplowAbandonCart = handleIf(isCommerce, abandonCartHandler);
@@ -87,10 +74,7 @@ const handleSnowplowAddToCart = handleIf(isCommerce, addToCartHandler);
 const handleAepAddToCart = handleIf(isAep, addToCartHandlerAEP);
 
 // shopping cart view
-const handleSnowplowShoppingCartView = handleIf(
-    isCommerce,
-    shoppingCartViewHandler,
-);
+const handleSnowplowShoppingCartView = handleIf(isCommerce, shoppingCartViewHandler);
 const handleAepShoppingCartView = handleIf(isAep, shoppingCartViewHandlerAEP);
 
 const handleSnowplowProductView = handleIf(isCommerce, productViewHandler);
@@ -99,10 +83,7 @@ const handleAepProductView = handleIf(isAep, productViewHandlerAEP);
 // order
 const handleSnowplowPlaceOrder = handleIf(isCommerce, placeOrderHandler);
 const handleAepPlaceOrder = handleIf(isAep, placeOrderHandlerAEP);
-const handleSnowplowInstantPurchase = handleIf(
-    isCommerce,
-    instantPurchaseHandler,
-);
+const handleSnowplowInstantPurchase = handleIf(isCommerce, instantPurchaseHandler);
 const handleAepInstantPurchase = handleIf(isAep, instantPurchaseHandlerAEP);
 
 // account
@@ -112,19 +93,10 @@ const handleAepCreateAccount = handleIf(isAep, createAccountHandlerAEP);
 const handleAepEditAccount = handleIf(isAep, editAccountHandlerAEP);
 
 // search
-const handleSnowplowSearchRequestSent = handleIf(
-    isCommerce,
-    searchRequestSentHandler,
-);
+const handleSnowplowSearchRequestSent = handleIf(isCommerce, searchRequestSentHandler);
 const handleAepSearchRequestSent = handleIf(isAep, searchRequestSentHandlerAEP);
-const handleSnowplowSearchResponseReceived = handleIf(
-    isCommerce,
-    searchResponseReceivedHandler,
-);
-const handleAepSearchResponseReceived = handleIf(
-    isAep,
-    searchResponseReceivedHandlerAEP,
-);
+const handleSnowplowSearchResponseReceived = handleIf(isCommerce, searchResponseReceivedHandler);
+const handleAepSearchResponseReceived = handleIf(isAep, searchResponseReceivedHandlerAEP);
 
 const subscribeToEvents = (): void => {
     const mse = window.magentoStorefrontEvents;
@@ -194,9 +166,7 @@ const unsubscribeFromEvents = (): void => {
     mse.unsubscribe.searchProductClick(searchProductClickHandler);
     mse.unsubscribe.searchRequestSent(handleSnowplowSearchRequestSent);
     mse.unsubscribe.searchRequestSent(handleAepSearchRequestSent);
-    mse.unsubscribe.searchResponseReceived(
-        handleSnowplowSearchResponseReceived,
-    );
+    mse.unsubscribe.searchResponseReceived(handleSnowplowSearchResponseReceived);
     mse.unsubscribe.searchResponseReceived(handleAepSearchResponseReceived);
     mse.unsubscribe.searchResultsView(searchResultsViewHandler);
     mse.unsubscribe.searchSuggestionClick(searchSuggestionClickHandler);
