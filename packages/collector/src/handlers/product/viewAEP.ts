@@ -20,8 +20,7 @@ const aepHandler = async (event: Event): Promise<void> => {
     if (productContext.pricing) {
         productListItem.discountAmount =
             productContext.pricing.regularPrice -
-            (productContext.pricing.specialPrice ??
-                productContext.pricing.regularPrice);
+            (productContext.pricing.specialPrice ?? productContext.pricing.regularPrice);
     }
 
     const payload: BeaconSchema = {

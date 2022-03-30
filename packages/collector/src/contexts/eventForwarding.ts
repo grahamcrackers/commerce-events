@@ -2,12 +2,9 @@ import { EventForwarding } from "@adobe/magento-storefront-events-sdk/dist/types
 
 import { EventForwardingContext } from "../types/contexts";
 
-const createContext = (
-    eventForwarding?: EventForwarding,
-): EventForwardingContext => {
+const createContext = (eventForwarding?: EventForwarding): EventForwardingContext => {
     const mse = window.magentoStorefrontEvents;
-    const eventForwardingCtx =
-        eventForwarding ?? mse.context.getEventForwarding();
+    const eventForwardingCtx = eventForwarding ?? mse.context.getEventForwarding();
 
     if (!eventForwardingCtx) {
         return {};

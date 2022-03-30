@@ -3,8 +3,7 @@ import * as sdkSchemas from "@adobe/magento-storefront-events-sdk/dist/types/typ
 import { Account, Address } from "../../types/aep";
 
 const createAccount = (accountContext: sdkSchemas.Account): Account => {
-    const { shippingAddress, emailAddress, firstName, lastName } =
-        accountContext;
+    const { shippingAddress, emailAddress, firstName, lastName } = accountContext;
     const address: Address = {
         city: shippingAddress?.city,
         country: shippingAddress?.country,

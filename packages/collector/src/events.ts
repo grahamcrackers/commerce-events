@@ -1,6 +1,6 @@
-import { Event, EventHandler } from '@adobe/magento-storefront-events-sdk/dist/types/types/events';
+import { Event, EventHandler } from "@adobe/magento-storefront-events-sdk/dist/types/types/events";
 
-import { createEventForwardingCtx } from './contexts';
+import { createEventForwardingCtx } from "./contexts";
 import {
     abandonCartHandler,
     abandonCartHandlerAEP,
@@ -36,8 +36,8 @@ import {
     shoppingCartViewHandlerAEP,
     signInHandlerAEP,
     signOutHandlerAEP,
-} from './handlers';
-import { EventForwardingContext } from './types/contexts';
+} from "./handlers";
+import { EventForwardingContext } from "./types/contexts";
 
 const isCommerce = (event: Event): boolean => {
     const ctx: EventForwardingContext = createEventForwardingCtx(event.eventInfo.eventForwardingContext);

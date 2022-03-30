@@ -68,11 +68,7 @@ const hasConfig = (): boolean => {
     const eventForwarding = context.getEventForwarding();
     const config = context.getAEP();
 
-    return (
-        (eventForwarding?.aep || false) &&
-        config.datastreamId !== "" &&
-        config.imsOrgId !== ""
-    );
+    return (eventForwarding?.aep || false) && config.datastreamId !== "" && config.imsOrgId !== "";
 };
 
 /** preconfigured alloy instance that allows us to send an event */

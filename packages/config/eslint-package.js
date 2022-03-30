@@ -20,13 +20,14 @@ module.exports = {
         // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     },
     overrides: [
-        {
-            env: {
-                jest: true,
-            },
-            files: ['**/__tests__/**/*.[jt]s', '**/?(*.)+(spec|test).[jt]s'],
-            extends: ['plugin:jest/recommended'],
-        },
+        // ignore linting tests for now
+        // {
+        //     env: {
+        //         jest: true,
+        //     },
+        //     files: ['**/__tests__/**/*.[jt]s', '**/?(*.)+(spec|test).[jt]s'],
+        //     extends: ['plugin:jest/recommended'],
+        // },
     ],
     ignorePatterns: ['**/*.js', 'node_modules', '.turbo', 'dist', 'coverage'],
 };

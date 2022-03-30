@@ -8,14 +8,12 @@ import { getDiscountAmount } from "../discount";
  *
  * @remarks `discountAmount` and `selectedOtions` are not supported in the sdk type yet
  */
-const createProductListItems = (
-    shoppingCartContext: ShoppingCart,
-): ProductListItem[] => {
+const createProductListItems = (shoppingCartContext: ShoppingCart): ProductListItem[] => {
     const returnList: ProductListItem[] = [];
     if (shoppingCartContext.items?.length) {
-        shoppingCartContext.items.forEach(item => {
+        shoppingCartContext.items.forEach((item) => {
             const selectedOptions: SelectedOption[] = [];
-            item.configurableOptions?.forEach(option => {
+            item.configurableOptions?.forEach((option) => {
                 selectedOptions.push({
                     type: option.optionLabel,
                     value: option.valueLabel,
