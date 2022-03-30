@@ -2,6 +2,12 @@
 
 a monorepo for adobe commerce events libraries
 
+## Features
+- typescript
+- eslint
+- prettier
+- husky/lint-staged
+
 ## Packages
 
 | Name                      |
