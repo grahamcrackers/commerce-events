@@ -34,7 +34,7 @@ jobs:
             - name: install
               run: yarn install --frozen-lockfile
             - name: build
-              run: yarn build:qa
+              run: yarn build
             # - name: release
             #   run: npm run release -- --skip.commit --skip.tag --release-as 0.0.0-${{ github.sha }}
             # - name: publish
