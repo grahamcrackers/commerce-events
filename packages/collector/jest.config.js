@@ -1,12 +1,9 @@
-const config = {
-    clearMocks: true,
-    collectCoverage: true,
-    coverageDirectory: "coverage",
-    coverageProvider: "v8",
-    preset: "ts-jest",
-    setupFilesAfterEnv: ["<rootDir>/tests/utils/setup.ts"],
-    testEnvironment: "jsdom",
-    verbose: true,
+module.exports = {
+    ...require('config/jest-package'),
+    rootDir: '.',
+    // be sure to not overwrite the setupFilesAfterEnv from config/jest-package
+    setupFilesAfterEnv: ["@testing-library/jest-dom","<rootDir>/tests/utils/setup.ts"],
+    moduleNameMapper: {
+        '\\.module\\.css$': 'identity-obj-proxy',
+    },
 };
-
-module.exports = config;

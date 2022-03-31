@@ -19,10 +19,21 @@
         "lint": "turbo run lint",
         "lint:fix": "turbo run lint:fix",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "sdk": "yarn workspace @grahamcrackers/commerce-events-sdk",
+        "collector": "yarn workspace @grahamcrackers/commerce-events-collector"
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^5.16.3",
+        "@testing-library/react": "^12.1.4",
+        "@testing-library/react-hooks": "^7.0.2",
+        "@testing-library/user-event": "^14.0.0",
+        "@types/jest": "^27.4.1",
+        "esbuild": "^0.14.29",
+        "esbuild-jest": "^0.5.0",
         "husky": ">=6",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^27.5.1",
         "lint-staged": ">=10",
         "prettier": "^2.5.1",
         "turbo": "latest"

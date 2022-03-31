@@ -26,8 +26,13 @@ module.exports = {
         //         jest: true,
         //     },
         //     files: ['**/__tests__/**/*.[jt]s', '**/?(*.)+(spec|test).[jt]s'],
-        //     extends: ['plugin:jest/recommended'],
+        //     extends: [
+        //     'plugin:testing-library/react'
+        //     'plugin:testing-library/dom'
+        //     'plugin:jest-dom/recommended'
+        //     'plugin:jest/recommended'
+        // ],
         // },
     ],
-    ignorePatterns: ['**/*.js', 'node_modules', '.turbo', 'dist', 'coverage'],
+    ignorePatterns: ['**/*.js', '**/*.json', 'node_modules', '.turbo', 'dist', 'coverage'],
 };

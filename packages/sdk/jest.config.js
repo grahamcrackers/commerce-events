@@ -1,9 +1,7 @@
-const config = {
-    clearMocks: true,
-    coverageDirectory: "coverage",
-    coverageProvider: "v8",
-    preset: "ts-jest",
-    testEnvironment: "jsdom",
+module.exports = {
+    ...require('config/jest-package'),
+    rootDir: '.',
+    moduleNameMapper: {
+        '\\.module\\.css$': 'identity-obj-proxy',
+    }
 };
-
-module.exports = config;
