@@ -19,8 +19,8 @@ a monorepo for adobe commerce events libraries
 
 -   [ ] enforce conventional commits
 -   github actions
-    -   [ ] build and test
-    -   [ ] deploy to npm
+    -   [x] build and test
+    -   [x] deploy to npm
     -   [ ] push code coverage results
 
 ## Node Version Support
