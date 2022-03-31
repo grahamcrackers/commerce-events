@@ -6,7 +6,6 @@ on:
             - "v*"
         paths:
             - "packages/sdk/**"
-            - "packages/collector/**"
             - ".github/workflow/publish-latest.yml"
 
 jobs:
@@ -24,13 +23,14 @@ jobs:
               with:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
+
             - name: install dependencies
               run: yarn install --frozen-lockfile
-            - name: build
+            - name: build sdk
+              working-directory: ./packages/sdk
               run: yarn build
-            - name: test
-              run: yarn test
-            # - name: publish
-            #   run: yarn publish --access public
-            #   env:
-            #       NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+            - name: publish
+              working-directory: ./packages/sdk
+              run: yarn publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
