@@ -1,5 +1,7 @@
 name: publish-collector
 
+# publishes the collector when we tag the repo with v
+
 on:
     push:
         tags:
