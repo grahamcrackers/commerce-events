@@ -1,5 +1,8 @@
 name: merge-to-main
 
+# will publish a new package to npm with a tag of 0.0.0-<github.sha>
+# disabling pushing to npm for now
+
 on:
     push:
         branches:
@@ -21,12 +24,12 @@ jobs:
                   node-version: 14
                   registry-url: https://registry.npmjs.org/
             - name: install
-              run: npm ci
+              run: yarn install --frozen-lockfile
             - name: build
-              run: npm run build:qa
-            - name: release
-              run: npm run release -- --skip.commit --skip.tag --release-as 0.0.0-${{ github.sha }}
-            - name: publish
-              run: npm publish --access public --tag qa
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+              run: yarn build:qa
+            # - name: release
+            #   run: npm run release -- --skip.commit --skip.tag --release-as 0.0.0-${{ github.sha }}
+            # - name: publish
+            #   run: npm publish --access public --tag qa
+            #   env:
+            #       NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}

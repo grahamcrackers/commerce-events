@@ -1,16 +1,17 @@
-name: publish-latest
+name: publish-sdk
 
 on:
     push:
+        branches: [main]
         tags:
             - "v*"
         paths:
             - "packages/sdk/**"
-            - ".github/workflow/publish-latest.yml"
+            - ".github/workflow/publish-sdk.yml"
 
 jobs:
-    publish-latest:
-        name: publish-latest
+    publish-sdk:
+        name: publish-sdk
         runs-on: ubuntu-latest
         steps:
             - name: checkout
