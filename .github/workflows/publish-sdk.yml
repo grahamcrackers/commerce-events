@@ -1,16 +1,17 @@
-name: publish-latest
+name: publish-sdk
 
 on:
     push:
+        branches: [main]
         tags:
             - "v*"
         paths:
             - "packages/sdk/**"
-            - ".github/workflow/publish-latest.yml"
+            - ".github/workflow/publish-sdk.yml"
 
 jobs:
-    publish-latest:
-        name: publish-latest
+    publish-sdk:
+        name: publish-sdk
         runs-on: ubuntu-latest
         steps:
             - name: checkout
@@ -18,6 +19,13 @@ jobs:
               with:
                   fetch-depth: 0
                   ref: ${{ github.ref }}
+
+            - name: cache
+              uses: actions/cache@v2
+              with:
+                  path: '**/node_modules'
+                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
             - name: node
               uses: actions/setup-node@v2
               with:

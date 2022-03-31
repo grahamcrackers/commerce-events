@@ -1,0 +1,46 @@
+name: publish-collector
+
+# publishes the collector when we tag the repo with v
+
+on:
+    push:
+        branches: [main]
+        tags:
+            - "v*"
+        paths:
+            - "packages/collector/**"
+            - ".github/workflow/publish-collector.yml"
+
+jobs:
+    publish-collector:
+        name: publish-collector
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+                  ref: ${{ github.ref }}
+
+            - name: cache
+              uses: actions/cache@v2
+              with:
+                  path: '**/node_modules'
+                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+                  
+            - name: node
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 16
+                  registry-url: https://registry.npmjs.org/
+
+            - name: install dependencies
+              run: yarn install --frozen-lockfile
+            - name: build sdk
+              working-directory: ./packages/collector
+              run: yarn build
+            - name: publish
+              working-directory: ./packages/collector
+              run: yarn publish --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
