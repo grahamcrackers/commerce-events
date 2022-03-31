@@ -1,6 +1,6 @@
 {
     "name": "@grahamcrackers/commerce-events-collector",
-    "version": "1.1.8",
+    "version": "2.0.0-beta.0",
     "description": "Event collector for Adobe Commerce storefronts",
     "main": "./dist/index.js",
     "module": "./dist/index.js",
