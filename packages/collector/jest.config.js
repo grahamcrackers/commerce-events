@@ -3,7 +3,4 @@ module.exports = {
     rootDir: '.',
     // be sure to not overwrite the setupFilesAfterEnv from config/jest-package
     setupFilesAfterEnv: ["@testing-library/jest-dom","<rootDir>/tests/utils/setup.ts"],
-    moduleNameMapper: {
-        '\\.module\\.css$': 'identity-obj-proxy',
-    },
 };
