@@ -3,9 +3,9 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
+        "dev": "next dev --port 3000",
         "build": "next build",
-        "start": "next start",
+        "start": "next start --port 3000",
         "lint": "next lint"
     },
     "dependencies": {
@@ -16,7 +16,7 @@
     },
     "devDependencies": {
         "config": "*",
-        "eslint": "7.32.0",
+        "eslint": "^8.12.0",
         "next-transpile-modules": "9.0.0",
         "tsconfig": "*",
         "@types/node": "^17.0.12",

@@ -12,18 +12,39 @@
     },
     "packageManager": "yarn@1.22.17",
     "scripts": {
+        "start": "turbo run start --parallel --continue",
         "build": "turbo run build",
         "dev": "turbo run dev --parallel",
+        "test": "turbo run test",
         "lint": "turbo run lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\""
+        "lint:fix": "turbo run lint:fix",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "prepare": "husky install",
+        "sdk": "yarn workspace @grahamcrackers/commerce-events-sdk",
+        "collector": "yarn workspace @grahamcrackers/commerce-events-collector"
     },
     "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^5.14.0",
-        "@typescript-eslint/parser": "^5.14.0",
-        "eslint": "^8.10.0",
-        "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-prettier": "^4.0.0",
+        "@testing-library/jest-dom": "^5.16.3",
+        "@testing-library/react": "^12.1.4",
+        "@testing-library/react-hooks": "^7.0.2",
+        "@testing-library/user-event": "^14.0.0",
+        "@types/jest": "^27.4.1",
+        "esbuild": "^0.14.29",
+        "esbuild-jest": "^0.5.0",
+        "husky": ">=6",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^27.5.1",
+        "lint-staged": ">=10",
         "prettier": "^2.5.1",
         "turbo": "latest"
+    },
+    "lint-staged": {
+        "apps/**/*.{js,jsx,ts,tsx}": [
+            "eslint --fix"
+        ],
+        "package/**/*.s": [
+            "eslint --fix"
+        ],
+        "*.json": "prettier --write"
     }
 }

@@ -1,8 +1,5 @@
 import { Event } from "@adobe/magento-storefront-events-sdk/dist/types/types/events";
-import {
-    SearchFilter,
-    SearchSort,
-} from "@adobe/magento-storefront-events-sdk/dist/types/types/schemas";
+import { SearchFilter, SearchSort } from "@adobe/magento-storefront-events-sdk/dist/types/types/schemas";
 
 import { getAlloy } from "../../alloy";
 import { createSearchInputCtx } from "../../contexts";
@@ -15,13 +12,9 @@ const handler = async (event: Event): Promise<void> => {
 
     const { searchUnitId, searchInputContext, debugContext } = event.eventInfo;
 
-    const searchInputCtx = createSearchInputCtx(
-        searchUnitId as string,
-        searchInputContext,
-    );
+    const searchInputCtx = createSearchInputCtx(searchUnitId as string, searchInputContext);
 
-    const sortFromCtx: SearchSort[] =
-        (searchInputCtx?.data.sort as SearchSort[]) ?? [];
+    const sortFromCtx: SearchSort[] = (searchInputCtx?.data.sort as SearchSort[]) ?? [];
 
     const sort: Sort[] = sortFromCtx.map((searchSort: SearchSort) => {
         return {
@@ -30,30 +23,27 @@ const handler = async (event: Event): Promise<void> => {
         } as Sort;
     });
 
-    const filtersFromCtx: SearchFilter[] =
-        (searchInputCtx?.data.filter as SearchFilter[]) ?? [];
+    const filtersFromCtx: SearchFilter[] = (searchInputCtx?.data.filter as SearchFilter[]) ?? [];
 
-    const filters: Filter[] = filtersFromCtx.map(
-        (searchFilter: SearchFilter) => {
-            let value: string[] = [];
-            let isRange = false;
-            if (searchFilter.eq) {
-                value.push(searchFilter.eq);
-            } else if (searchFilter.in) {
-                value = searchFilter.in;
-            } else if (searchFilter.range) {
-                // we represent range in the event as "from value[0] to value[1]"
-                isRange = true;
-                value.push(String(searchFilter.range.from));
-                value.push(String(searchFilter.range.to));
-            }
-            return {
-                attribute: searchFilter.attribute,
-                value,
-                isRange,
-            } as Filter;
-        },
-    );
+    const filters: Filter[] = filtersFromCtx.map((searchFilter: SearchFilter) => {
+        let value: string[] = [];
+        let isRange = false;
+        if (searchFilter.eq) {
+            value.push(searchFilter.eq);
+        } else if (searchFilter.in) {
+            value = searchFilter.in;
+        } else if (searchFilter.range) {
+            // we represent range in the event as "from value[0] to value[1]"
+            isRange = true;
+            value.push(String(searchFilter.range.from));
+            value.push(String(searchFilter.range.to));
+        }
+        return {
+            attribute: searchFilter.attribute,
+            value,
+            isRange,
+        } as Filter;
+    });
 
     const payload: BeaconSchema = {
         _id: debugContext?.eventId,

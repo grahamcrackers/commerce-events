@@ -1,5 +1,6 @@
-import mdl, { MagentoStorefrontEvents } from "../src/index";
 import { waitFor } from "@testing-library/dom";
+
+import mdl, { MagentoStorefrontEvents } from "../src/index";
 
 beforeAll(() => {
     // Forces magento data layer code to be bundled so that

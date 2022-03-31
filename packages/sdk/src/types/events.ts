@@ -1,5 +1,5 @@
-import { CustomContext, Context } from "./contexts";
 import events from "../events";
+import { Context, CustomContext } from "./contexts";
 
 export type EventName =
     | typeof events.ADD_TO_CART

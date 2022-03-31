@@ -23,7 +23,7 @@ const aepHandler = (event: Event): void => {
         },
     };
 
-    getAlloy().then(alloy =>
+    getAlloy().then((alloy) =>
         alloy("sendEvent", {
             xdm: payload,
         }),

@@ -36,6 +36,7 @@ const config = {
         extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     },
     devServer: {
+        port: 8080,
         static: path.join(__dirname, "dist"),
         hot: true,
     },

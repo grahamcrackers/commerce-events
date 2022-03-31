@@ -1,5 +1,5 @@
-import { ContextName, CustomContext, Context } from "./types/contexts";
-import { EventName, ListenerOptions, EventHandler } from "./types/events";
+import { Context, ContextName, CustomContext } from "./types/contexts";
+import { EventHandler, EventName, ListenerOptions } from "./types/events";
 
 export abstract class Base {
     // Set a context on ACDL
@@ -14,27 +14,18 @@ export abstract class Base {
 
     // Get a context from ACDL
     protected getContext<T>(name?: ContextName | string): T {
-        return window.adobeDataLayer.getState
-            ? window.adobeDataLayer.getState(name)
-            : ({} as T);
+        return window.adobeDataLayer.getState ? window.adobeDataLayer.getState(name) : ({} as T);
     }
 
     // Add event listener to ACDL
-    protected addEventListener(
-        name: EventName,
-        handler: EventHandler,
-        options?: ListenerOptions,
-    ): void {
+    protected addEventListener(name: EventName, handler: EventHandler, options?: ListenerOptions): void {
         window.adobeDataLayer.push((acdl: AdobeClientDataLayer) => {
             acdl.addEventListener(name, handler, options);
         });
     }
 
     // Remove event listener from ACDL
-    protected removeEventListener(
-        name: EventName,
-        handler: EventHandler,
-    ): void {
+    protected removeEventListener(name: EventName, handler: EventHandler): void {
         window.adobeDataLayer.push((acdl: AdobeClientDataLayer) => {
             acdl.removeEventListener(name, handler);
         });

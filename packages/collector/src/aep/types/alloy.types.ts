@@ -26,10 +26,7 @@ export interface XDM<T> {
     xdm: T;
 }
 
-export type AlloyInstance = (
-    command: CommandType,
-    options?: ConfigOptions | XDM<BeaconSchema>,
-) => Promise<void>;
+export type AlloyInstance = (command: CommandType, options?: ConfigOptions | XDM<BeaconSchema>) => Promise<void>;
 
 export type Alloy = {
     sendEvent: (schema: BeaconSchema) => void;
